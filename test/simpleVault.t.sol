@@ -30,4 +30,19 @@ contract simpleVaultTest is Test {
         vault = new SimpleVault(asset);
         asset.mint(saoirse, 1000e18);
     }
+    
+
+    // in this test the user deposit into the vault and the vault mints the same 
+    // number of shares
+    function testDeposit() public {
+        // User approves and deposits
+        vm.prank(saoirse);
+        asset.approve(address(vault), 1000e18);
+        vm.prank(saoirse);
+        vault.deposit(1000e18, saoirse);
+
+        // check shares and assets
+        assertEq(vault.balanceOf(saoirse), 1000e18);
+        assertEq(asset.balanceOf(address(vault)), 1000e18);
+    }
 }
