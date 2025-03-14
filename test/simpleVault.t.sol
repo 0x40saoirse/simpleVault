@@ -53,7 +53,7 @@ contract simpleVaultTest is Test {
         vm.prank(saoirse);
         vault.deposit(1000e18, saoirse);
 
-        // check shares and assets
+        // check assets
         assertEq(vault.balanceOf(saoirse), 1000e18);
         assertEq(asset.balanceOf(address(vault)), 1000e18);
         assertEq(asset.balanceOf(address(saoirse)), 0);
@@ -62,7 +62,7 @@ contract simpleVaultTest is Test {
         vm.prank(saoirse);
         vault.withdraw(1000e18, address(saoirse), address(saoirse));
 
-        // check shares and assets
+        // check assets
         assertEq(vault.balanceOf(saoirse), 0);
         assertEq(asset.balanceOf(address(vault)), 0);
         assertEq(asset.balanceOf(address(saoirse)), 1000e18);
