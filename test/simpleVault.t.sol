@@ -45,4 +45,27 @@ contract simpleVaultTest is Test {
         assertEq(vault.balanceOf(saoirse), 1000e18);
         assertEq(asset.balanceOf(address(vault)), 1000e18);
     }
+
+    function testDepositAndWithdraw() public {
+         // User approves and deposits
+        vm.prank(saoirse);
+        asset.approve(address(vault), 1000e18);
+        vm.prank(saoirse);
+        vault.deposit(1000e18, saoirse);
+
+        // check shares and assets
+        assertEq(vault.balanceOf(saoirse), 1000e18);
+        assertEq(asset.balanceOf(address(vault)), 1000e18);
+        assertEq(asset.balanceOf(address(saoirse)), 0);
+
+        // user withdrawal
+        vm.prank(saoirse);
+        vault.withdraw(1000e18, address(saoirse), address(saoirse));
+
+        // check shares and assets
+        assertEq(vault.balanceOf(saoirse), 0);
+        assertEq(asset.balanceOf(address(vault)), 0);
+        assertEq(asset.balanceOf(address(saoirse)), 1000e18);
+        
+    }
 }
