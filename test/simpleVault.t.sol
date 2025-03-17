@@ -68,4 +68,31 @@ contract simpleVaultTest is Test {
         assertEq(asset.balanceOf(address(saoirse)), 1000e18);
         
     }
+
+    function testDepositAndCheckSharesSymbol() public {
+        // user approves and deposits
+        vm.prank(saoirse);
+        asset.approve(address(vault), 1000e18);
+        vm.prank(saoirse);
+        vault.deposit(1000e18, saoirse);
+
+        // check assets
+        assertEq(vault.balanceOf(saoirse), 1000e18);
+        assertEq(asset.balanceOf(address(vault)), 1000e18);
+        assertEq(asset.balanceOf(address(saoirse)), 0);
+
+        // check shares
+        assertEq(vault.symbol(), "ikTKN");
+
+    }
+
+
+    // convertToShares
+    // convertToAssets
+    // maxRedeem
+
+    // inflation/deflation attack
+    // security - reentrancy guards
+    // access control
+    // strategies
 }
